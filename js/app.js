@@ -52,12 +52,16 @@ var Player = function(){
 	this.sprite = 'images/char-boy.png';
 	this.resetPlayer();
 	this.width = 101;
+	this.score = 0;
 };
 
 Player.prototype.update = function(){
 	if(this.y < 1){
 		//the player made it
+		console.log(this.score);
 		this.resetPlayer();
+		this.raiseScore();
+		console.log(this.score);
 	}
 	
 	if(this.y > 380){
@@ -76,6 +80,9 @@ Player.prototype.update = function(){
 // Draw the player on the screen, required method for game
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+	ctx.font = '24PT Impact';
+	ctx.lineWidth = 3;
+	ctx.fillText(`Score: ${this.score}`, 10, 90);
 };
 
 Player.prototype.handleInput = obj => {
@@ -101,6 +108,17 @@ Player.prototype.handleInput = obj => {
 Player.prototype.resetPlayer = function(){
 	this.y = 380;
 	this.x = 200;
+}
+
+//raise the score by one
+Player.prototype.raiseScore = function() {
+	this.score++;
+	//this.displayScore();
+}
+
+//display score
+Player.prototype.displayScore = function() {
+	
 }
 
 // Now instantiate your objects.
@@ -132,7 +150,7 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
-
+//this function takes an array and a number of items you want to return
 //https://stackoverflow.com/questions/19269545/how-to-get-n-no-elements-randomly-from-an-array
 function getRandom(arr, n) {
     var result = new Array(n),
