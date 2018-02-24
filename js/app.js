@@ -6,9 +6,9 @@ var Enemy = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-	this.x = 0;
-	this.y = 65;
-	this.speed = 100;//could be a constant?
+	this.x = -102;
+	this.y = randomYPosition();
+	this.speed = randomSpeed();
 };
 
 // Update the enemy's position, required method for game
@@ -17,7 +17,12 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-	this.x++*dt;
+	this.x = this.x + this.speed * dt;
+	if(this.x > 600){
+		this.x = -102;
+		this.y = randomYPosition();
+		this.speed = randomSpeed();
+	}
 	//handle collision
 };
 
@@ -36,16 +41,13 @@ var Player = function(){
 };
 
 Player.prototype.update = function(){
-	console.log(this.x)
-	//console.log(Math.sign(this.y));
 	if(this.y < 1){
-		console.log(Math.sign(this.y));
+		//the player made it
 		this.y = 380;
 		this.x = 200;
 	}
 	
 	if(this.y > 380){
-		console.log(Math.sign(this.y));
 		this.y = 380;
 	}
 	
@@ -67,6 +69,7 @@ Player.prototype.handleInput = obj => {
 	switch(obj) {
     case 'up':
 		player.y -= 83;
+		console.log(player.y);
         break;
     case 'down':
 		player.y += 83;
@@ -82,12 +85,19 @@ Player.prototype.handleInput = obj => {
 }
 };
 
-
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
-var enemy1 = new Enemy;
+var allEnemies = []; 
+var set = [], numEnemies = 3;
 
-var allEnemies = [enemy1];
+for(var i = 0; i < numEnemies; i++){
+	allEnemies[i] = new Enemy;
+	allEnemies[i].speed = randomSpeed(); 
+	allEnemies[i].y= randomYPosition();
+}
+
+//allEnemies = set;
+console.log(allEnemies);
 // Place the player object in a variable called player
 var player = new Player;
 
@@ -106,3 +116,31 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
+
+//https://stackoverflow.com/questions/19269545/how-to-get-n-no-elements-randomly-from-an-array
+function getRandom(arr, n) {
+    var result = new Array(n),
+        len = arr.length,
+        taken = new Array(len);
+    if (n > len)
+        throw new RangeError("getRandom: more elements taken than available");
+    while (n--) {
+        var x = Math.floor(Math.random() * len);
+        result[n] = arr[x in taken ? taken[x] : x];
+        taken[x] = --len in taken ? taken[len] : len;
+    }
+    return result;
+}
+
+
+//get random speed
+function randomSpeed(){
+	return Math.random() * (400 - 100) + 100; 
+}
+
+//get a random y position for enemy
+function randomYPosition(){
+	positions = [48, 131, 214];
+	const position = getRandom(positions, 1);
+	return position;
+}
