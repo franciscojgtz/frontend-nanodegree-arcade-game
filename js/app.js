@@ -9,6 +9,7 @@ var Enemy = function() {
 	this.x = -102;
 	this.y = randomYPosition();
 	this.speed = randomSpeed();
+	this.width = 101;
 };
 
 // Update the enemy's position, required method for game
@@ -19,11 +20,12 @@ Enemy.prototype.update = function(dt) {
     // all computers.
 	this.x = this.x + this.speed * dt;
 	if(this.x > 600){
-		this.x = -102;
+		this.x = -101;
 		this.y = randomYPosition();
 		this.speed = randomSpeed();
 	}
 	//handle collision
+	this.checkCollision();	
 };
 
 // Draw the enemy on the screen, required method for game
@@ -31,20 +33,31 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+//Enemy and player are moving on the same y points
+//Check if they have collided on the x axis
+//player and enemy are 101 on width
+Enemy.prototype.checkCollision = function() {
+    if((this.y == player.y) && (((player.x) < this.x + this.width))&&(player.x + player.width > this.x)){
+		console.log('collision');
+		console.log(this.x);
+		console.log(player.x);
+		player.resetPlayer();//bring player to original position
+	}
+};
+
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function(){
 	this.sprite = 'images/char-boy.png';
-	this.x = 200;
-	this.y = 380;
+	this.resetPlayer();
+	this.width = 101;
 };
 
 Player.prototype.update = function(){
 	if(this.y < 1){
 		//the player made it
-		this.y = 380;
-		this.x = 200;
+		this.resetPlayer();
 	}
 	
 	if(this.y > 380){
@@ -69,7 +82,6 @@ Player.prototype.handleInput = obj => {
 	switch(obj) {
     case 'up':
 		player.y -= 83;
-		console.log(player.y);
         break;
     case 'down':
 		player.y += 83;
@@ -82,13 +94,19 @@ Player.prototype.handleInput = obj => {
         break;
     default:
         console.log(obj);
-}
+	}
 };
+
+//Bring player to original position
+Player.prototype.resetPlayer = function(){
+	this.y = 380;
+	this.x = 200;
+}
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 var allEnemies = []; 
-var set = [], numEnemies = 3;
+const numEnemies = 3;
 
 for(var i = 0; i < numEnemies; i++){
 	allEnemies[i] = new Enemy;
@@ -96,8 +114,6 @@ for(var i = 0; i < numEnemies; i++){
 	allEnemies[i].y= randomYPosition();
 }
 
-//allEnemies = set;
-console.log(allEnemies);
 // Place the player object in a variable called player
 var player = new Player;
 
@@ -135,7 +151,8 @@ function getRandom(arr, n) {
 
 //get random speed
 function randomSpeed(){
-	return Math.random() * (400 - 100) + 100; 
+	const speed = Math.floor(Math.random() * (400 - 100) + 100); 
+	return speed;
 }
 
 //get a random y position for enemy
