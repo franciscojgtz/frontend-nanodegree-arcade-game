@@ -56,6 +56,7 @@ const Player = class{
         this.score = 0;
     }
 
+    //handles the user input and moves the player on the screen
     handleInput(key) {
         switch(key) {
         case 'up':
@@ -75,6 +76,8 @@ const Player = class{
         }
     }
 
+    //update the player position and make sure it doesn't go
+    //outside of the rendering box
     update() {
         if(this.y < 1){
             //the player made it
@@ -108,7 +111,8 @@ const Player = class{
         this.x = 200;
     }
 
-    raiseScore(){
+    //Raise the score
+    raiseScore() {
         this.score++;
     }
 };
@@ -125,7 +129,7 @@ for(let i = 0; i < numEnemies; i++){
     allEnemies[i].y= randomYPosition();
 }
 // Place the player object in a variable called player
-var player = new Player;
+const player = new Player;
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -157,7 +161,7 @@ function getRandom(arr, n) {
 }
 
 
-//get random speed
+//get a random speed
 function randomSpeed(){
     const speed = Math.floor(Math.random() * (400 - 100) + 100); 
     return speed;

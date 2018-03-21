@@ -61,3 +61,33 @@ js (directory)
 		sprite -> assigned to the char-boy.png to diplay the enemy
 		width -> width of the image (101 pixels).
 		score -> score of the player
+
+		withing our constructor we will call a method called resetPlayer() to bring our player to the initial position.
+
+	methods:
+		handleInput(key) -> handles the user input and moves the player on the screen.
+		update() -> update the player position and make sure it doesn't go outside of the rendering box
+		render() -> Draw the player on the screen, required method for game
+		resetPlayer() -> Bring player to original position
+		raiseScore() -> Raise the score
+
+	event listener:
+		// This listens for key presses and sends the keys to your
+		// Player.handleInput() method. You don't need to modify this.
+		document.addEventListener('keyup', e => { });
+
+	helper functions:
+	 	randomSpeed() -> get a random speed (could be added to be a method for the Enemy Class)
+
+		randomYPosition() -> get a random y position for enemy  (could be added to be a method for the Enemy Class)
+
+		getRandom(arr, n) -> this function takes an array and a number of items you want to return
+
+	Instantiate our Player
+		const player = new Player;//global object
+
+	Instantiate Enemies
+		const allEnemies = [];//array to hold our enemies
+		const numEnemies = 3;// this is the number of enemies we want displayed on our screen
+
+		used a for loop to instantiate our enemies, set a random speed and a random y positon for each enemy
