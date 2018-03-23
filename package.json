@@ -1,0 +1,23 @@
+{
+  "name": "frontend-nanodegree-arcade-game",
+  "version": "1.0.0",
+  "description": "frontend-nanodegree-arcade-game\r ===============================",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/franciscojgtz/frontend-nanodegree-arcade-game.git"
+  },
+  "author": "Francisco Gutierrez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/franciscojgtz/frontend-nanodegree-arcade-game/issues"
+  },
+  "homepage": "https://github.com/franciscojgtz/frontend-nanodegree-arcade-game#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
